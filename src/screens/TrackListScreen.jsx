@@ -4,7 +4,7 @@ import {View, Text, StyleSheet} from 'react-native'
 const TrackListScreen = () => {
     return (
     <View>
-        <Text style={{fontSise:48}}>TrackListScreen</Text>
+        <Text style={{fontSize:48}}>TrackListScreen</Text>
     </View>
 
     )
