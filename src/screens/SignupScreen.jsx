@@ -1,56 +1,62 @@
-import React,{useState} from 'react'
-import {View, StyleSheet} from 'react-native'
-import {Text, Button, Input} from 'react-native-elements'
-import Spacer from '../Spacer'
-const SignupScreen = ({navigation}) => {
-    const [email, setEmail] = useState('')
-    const [password, setPassowrd] = useState('')
-    console.log(email, password)
-    return (
-        <View style={styles.container}>
-            <Spacer>
-            <Text h3>Signup for Tracker</Text>
-            </Spacer>
+import React, { useState, useContext } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { Text, Input, Button } from 'react-native-elements';
+import Spacer from '../components/Spacer';
+import { Context as AuthContext } from '../context/AuthContext';
 
-            <Spacer>            
-            <Input label="Email"
-             onChangeText={setEmail}
-             autoCapitalize='none'
-            autoCorrect={false}/>
-            </Spacer>
+const SignupScreen = ({ navigation }) => {
+  const { state, signup } = useContext(AuthContext);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  console.log(state)
+  return (
+    <View style={styles.container}>
+      <Spacer>
+        <Text h3>Sign Up for Tracker</Text>
+      </Spacer>
+      <Input
+        label="Email"
+        value={email}
+        onChangeText={setEmail}
+        autoCapitalize="none"
+        autoCorrect={false}
+      />
+      <Spacer />
+      <Input
+        secureTextEntry
+        label="Password"
+        value={password}
+        onChangeText={setPassword}
+        autoCapitalize="none"
+        autoCorrect={false}
+      />
+    {state.errorMessage? <Text style={styles.errorMessage}>Somthing went wrong</Text> : null}
+  
+      <Spacer>
+        <Button title="Sign Up" onPress={() => signup({ email, password })} />
+      </Spacer>
+    </View>
+  );
+};
 
-            <Spacer>            
-            <Input label="Password"
-            secureTextEntry
-             onChangeText={setPassowrd}
-              autoCapitalize='none'
-               autoCorrect={false}/>
-            </Spacer>
-
-
-            <Spacer>
-            <Button title="Signup"/>
-            </Spacer>
-
-
-
-        </View>
-
-    )
-}
+SignupScreen.navigationOptions = () => {
+  return {
+    header: () => false,
+  };
+};
 
 const styles = StyleSheet.create({
-container:{
-    
-    flex:1,
-    justifyContent:'center',
-    marginBottom:250,
-    
-}
-})
-SignupScreen.navigationOptions = () => {
-    return {
-      headerShown: false,
-    };
-  };
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    marginBottom: 250,
+  },
+  errorMessage:{
+    fontSize:15,
+    color:'red',
+    marginLeft:15,
+    marginTop:15
+  }
+});
+
 export default SignupScreen;

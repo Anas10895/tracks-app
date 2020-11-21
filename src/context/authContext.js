@@ -1,44 +1,44 @@
-import createDataContext from './createDataContext'
-import { create } from 'istanbul-reports'
+import createDataContext from './createDataContext';
+import trackerApi from '../api/tarker';
 
 const authReducer = (state, action) => {
-switch(action.type){
-
+  switch (action.type) {
+      case 'add-error':
+          return {...state, errorMessage:action.payload}
+      
     default:
-    return state
-    
-    };
+      return state;
+  }
 };
 
-const signup = (dispatch) => {
-    return ({email, password}) => {
-        // make in api call to the sgin in with email and password
-
-        //if we are signin change the state to authntecated 
-
-        //if signin false show a error message to the user 
+const signup = dispatch => {
+  return async ({ email, password }) => {
+    try {
+      const response = await trackerApi.post('/signup', { email, password });
+      console.log(response.data);
+    } catch (err) {
+      console.log(err.response.data);
+      dispatch({type:'add-error', payload:'Somting went wrong with signup'})
     }
-}
+  };
+};
 
-const signin = (dispatch) => {
-    return ({email, password}) => {
-        //try to sign in
+const signin = dispatch => {
+  return ({ email, password }) => {
+    // Try to signin
+    // Handle success by updating state
+    // Handle failure by showing error message (somehow)
+  };
+};
 
-        //if signin success change the state
+const signout = dispatch => {
+  return () => {
+    // somehow sign out!!!
+  };
+};
 
-        //if not show a error message 
-    }
-}
-
-const signout = (dispatch) => {
-    return () => {
-        //change state to signin:false
-
-    }
-}
-
-export const {Provider, Context} = createDataContext(
-    authReducer,
-    {signin, signup, signout},
-    {isSignin: false}
-)
+export const { Provider, Context } = createDataContext(
+  authReducer,
+  { signin, signout, signup },
+  { isSignedIn: false }
+);
