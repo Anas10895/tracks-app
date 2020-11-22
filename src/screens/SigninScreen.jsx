@@ -3,10 +3,9 @@ import { View, StyleSheet } from 'react-native';
 import AuthForm from '../components/AuthFrom'
 import { Context as AuthContext } from '../context/AuthContext';
 import NavLink from '../components/NavLink'
-const SignupScreen = ({ navigation }) => {
+const SigninScreen = ({ navigation }) => {
   const { state, signin } = useContext(AuthContext);
 
-  console.log(state)
   return (
     <View style={styles.container}>
      <AuthForm 
@@ -17,13 +16,13 @@ const SignupScreen = ({ navigation }) => {
 
     <NavLink 
     routeName="Signup"
-    text="Alredy have an account? Sign up insted."
+    text="Don't have an account? Sign up insted."
     />
     </View>
   );
 };
 
-SignupScreen.navigationOptions = () => {
+SigninScreen.navigationOptions = () => {
   return {
     headerShown: false,
   };
@@ -46,4 +45,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default SignupScreen;
+export default SigninScreen;
