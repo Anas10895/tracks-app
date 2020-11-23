@@ -5,17 +5,22 @@ import {navigate} from '../../navigationRef'
 
 const authReducer = (state, action) => {
   switch (action.type) {
-      case 'add-error':
+      case 'add_error':
           return {...state, errorMessage:action.payload}
       
        case 'signin':
            return{errorMessage: '' , token: action.payload}   
-
+       case 'clear_error_message':
+         return {...state, errorMessage:''}
             
     default:
       return state;
   }
 };
+
+const clearErrorMessage =  dispatch => () => {
+  dispatch({type:"clear_error_message"})
+}
 
 const signup = dispatch =>  async ({ email, password }) => {
     try {
@@ -26,7 +31,7 @@ const signup = dispatch =>  async ({ email, password }) => {
       navigate('TrackList');
     } catch (err) {
       console.log(err.response.data);
-      dispatch({type:'add-error', payload:'Somting went wrong with Signup'})
+      dispatch({type:'add_error', payload:'Somting went wrong with Signup'})
     }
   };
 
@@ -39,7 +44,7 @@ dispatch({type:'signin', payload:response.data.token })
 
 navigate('TrackList');
 }catch(err){
-  dispatch({type:'add-error', payload:'Somting went wrong with Signin'})
+  dispatch({type:'add_error', payload:'Somting went wrong with Signin'})
 
 }
   };
@@ -53,6 +58,6 @@ const signout = dispatch => {
 
 export const { Provider, Context } = createDataContext(
   authReducer,
-  { signin, signout, signup },
+  { signin, signout, signup, clearErrorMessage },
   { token: null, errorMessage:'' }
 );
