@@ -7,10 +7,12 @@ import NavLink from '../components/NavLink'
 const SignupScreen = ({ navigation }) => {
   const { state, signup, clearErrorMessage } = useContext(AuthContext);
 
+
+
   console.log(state)
   return (
     <View style={styles.container}>
-    <NavigationEvents onWillBlur ={() => clearErrorMessage() }  /> 
+    <NavigationEvents onWillBlur ={() => clearErrorMessage() } onWillFocus={() => clearErrorMessage()} /> 
     
      <AuthForm 
      headerText="Sign Up for Tracker" 
