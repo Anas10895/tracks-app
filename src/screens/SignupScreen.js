@@ -9,7 +9,6 @@ const SignupScreen = ({ navigation }) => {
 
 
 
-  console.log(state)
   return (
     <View style={styles.container}>
     <NavigationEvents onWillBlur ={() => clearErrorMessage() } onWillFocus={() => clearErrorMessage()} /> 
